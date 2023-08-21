@@ -1,19 +1,23 @@
 package com.example.summation;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.MainActivity2;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText num1;
-    private EditText num2;
-    private TextView answer;
-    private Button  add;
+    private EditText name1;
+    private EditText name2;
+    private EditText phone;
+
+    private Button button;
 
 
     @Override
@@ -22,21 +26,32 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        num1 = (EditText) findViewById(R.id.editTextNumber);
-        num2 = (EditText) findViewById(R.id.editTextNumber2);
-        add = (Button) findViewById(R.id.button);
-        answer = (TextView) findViewById(R.id.textView3);
-
-
-        add.setOnClickListener(new View.OnClickListener() {
+        name1 = findViewById(R.id.editTextName);
+        name2 = findViewById(R.id.editTextName2);
+        phone = findViewById(R.id.editTextPhone);
+        button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int number1 = Integer.parseInt(num1.getText().toString());
-                int number2 = Integer.parseInt(num2.getText().toString());
-                int sum = number1 + number2;
-                answer.setText("The Answer is " + String.valueOf(sum));
+                String firstName = name1.getText().toString();
+                String lastName = name2.getText().toString();
+                String phoneNumber = phone.getText().toString();
 
+                if(firstName.isEmpty()||lastName.isEmpty()||phoneNumber.isEmpty())
+                {
+                    Toast.makeText(getApplicationContext(),"Fill all the fields",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+
+                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                intent.putExtra("firstName",  firstName);
+                intent.putExtra("lastName",  lastName);
+                intent.putExtra("phoneNumber", phoneNumber);
+
+                startActivity(intent);
             }
         });
     }
 }
+
